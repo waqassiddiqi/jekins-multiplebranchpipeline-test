@@ -16,8 +16,8 @@ pipeline {
                 dir('jekins-multiplebranchpipeline-test') {
                 	// pull the branch that we received an alert for?
                     sh 'printenv'
-                    sh "echo ${GIT_BRANCH}"
-                    sh "echo ${GIT_COMMITTER_NAME}"
+                    // sh "echo ${GIT_BRANCH}"
+                    // sh "echo ${GIT_COMMITTER_NAME}"
                     git branch: "${GIT_BRANCH}", url: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git'
                     sh "mvn clean install"
                 }
