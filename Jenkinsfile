@@ -14,11 +14,17 @@ pipeline {
         stage('Build') {
             steps {
                 dir('jekins-multiplebranchpipeline-test') {
-                	// pull the branch that we received an alert for?
+                	
                     sh 'printenv'
-                    // sh "echo ${GIT_BRANCH}"
-                    // sh "echo ${GIT_COMMITTER_NAME}"
-                    git branch: "${GIT_BRANCH}", url: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git'
+
+                    checkout resolveScm source: [$class: 'GitSCMSource', credentialsId: 'Github-Creds', id: '_', remote: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]], targets: ['dev, develop']
+                    
+                    script {
+                        GIT_CULPRIT = sh(returnStdout: true, script:'git --no-pager show -s --format=%ae | sed s/[@].*//').trim()
+                        echo "culprit: ${GIT_CULPRIT}"
+                    }
+
+                    // git branch: "${GIT_BRANCH}", url: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git'
                     sh "mvn clean install"
                 }
             }
