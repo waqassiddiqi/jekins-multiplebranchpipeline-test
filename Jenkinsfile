@@ -17,7 +17,7 @@ pipeline {
                 	
                     sh 'printenv'
 
-                    checkout resolveScm source: [$class: 'GitSCMSource', credentialsId: 'Github-Creds', id: '_', remote: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]], targets: ['dev, develop']
+                    resolveScm source: [$class: 'GitSCMSource', credentialsId: 'Github-Creds', id: '_', remote: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]], targets: ['dev, develop']
                     
                     
                     sh "mvn clean install"
