@@ -18,7 +18,8 @@ pipeline {
                         def branch = resolveScm source: [$class: 'GitSCMSource', credentialsId: 'Github-Creds', id: '_', remote: 'https://github.com/waqassiddiqi/jekins-multiplebranchpipeline-test.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait']]], targets: ['dev', GIT_BRANCH]
                         checkout branch
                         sh "ls"
-                        sh "mvn clean install"
+                        sh "chmod +x build.py"
+						sh "./build.py"
                     }
                 }
             }
